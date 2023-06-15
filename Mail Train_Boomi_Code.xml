@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Component xmlns:bns="http://api.platform.boomi.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" componentId="589b9bc0-9b62-4dd6-a2cf-20828b8f5ac7" createdBy="pavan@easystepin.com" createdDate="2023-06-03T05:17:05Z" currentVersion="true" deleted="false" folderFullPath="EasyStepIn LLC/Meepaisa_Retail/Sandbox/Pavan S" folderId="Rjo0ODgyNzE4" folderName="Pavan S" modifiedBy="pavan@easystepin.com" modifiedDate="2023-06-03T16:11:11Z" name="Mail Train Test" type="process" version="12">
+  <bns:encryptedValues/>
+  <bns:description/>
+  <bns:object>
+    <process allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" updateRunDates="true" workload="general">
+      <shapes>
+        <shape image="start" name="shape1" shapetype="start" userlabel="" x="64.0" y="142.0">
+          <configuration>
+            <noaction/>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape1.dragpoint1" toShape="shape6" x="224.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="exception_icon" name="shape2" shapetype="exception" userlabel="Raise Exception" x="1440.0" y="272.0">
+          <configuration>
+            <exception stopsingledoc="true" title="Raise HTTP Exception">
+              <exMessage>{1}</exMessage>
+              <exParameters>
+                <parametervalue key="0" valueType="track">
+                  <trackparameter defaultValue="" propertyId="meta.base.applicationstatusmessage" propertyName="Base - Application Status Message"/>
+                </parametervalue>
+              </exParameters>
+            </exception>
+          </configuration>
+          <dragpoints/>
+        </shape>
+        <shape image="decision_icon" name="shape3" shapetype="decision" userlabel="Check Status?" x="1104.0" y="144.0">
+          <configuration>
+            <decision comparison="equals" name="Check Status?">
+              <decisionvalue valueType="track">
+                <trackparameter defaultValue="" propertyId="meta.base.applicationstatuscode" propertyName="Base - Application Status Code"/>
+              </decisionvalue>
+              <decisionvalue valueType="static">
+                <staticparameter staticproperty="200"/>
+              </decisionvalue>
+            </decision>
+          </configuration>
+          <dragpoints>
+            <dragpoint identifier="true" name="shape3.dragpoint1" text="True" toShape="shape5" x="1424.0" y="152.0"/>
+            <dragpoint identifier="false" name="shape3.dragpoint2" text="False" toShape="shape2" x="1424.0" y="280.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="connectoraction_icon" name="shape4" shapetype="connectoraction" userlabel="" x="720.0" y="144.0">
+          <configuration>
+            <connectoraction actionType="Send" allowDynamicCredentials="NONE" connectionId="082961c8-4437-495a-ba6f-f023db8286e2" connectorType="http" hideSettings="false" operationId="cfb65c02-c886-41b7-84e3-2d6c97e5800f" parameter-profile="EMBEDDED|HttpParameterChooser|cfb65c02-c886-41b7-84e3-2d6c97e5800f">
+              <parameters/>
+              <dynamicProperties/>
+            </connectoraction>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape4.dragpoint1" toShape="shape3" x="1088.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="stop_icon" name="shape5" shapetype="stop" userlabel="" x="1440.0" y="144.0">
+          <configuration>
+            <stop continue="true"/>
+          </configuration>
+          <dragpoints/>
+        </shape>
+        <shape image="documentproperties_icon" name="shape6" shapetype="documentproperties" userlabel="Set Mail Send Props" x="240.0" y="144.0">
+          <configuration>
+            <documentproperties>
+              <documentproperty defaultValue="" isDynamicCredential="false" isTradingPartner="false" name="Dynamic Document Property - DDP_Access_Token" persist="false" propertyId="dynamicdocument.DDP_Access_Token" shouldEncrypt="false">
+                <sourcevalues>
+                  <parametervalue key="1" valueType="definedparameter">
+                    <definedprocessparameter componentId="84e16cb0-ed38-42a6-909a-46b4adb0b3ef" componentName="Common_Email_Send_Using_Templates" propertyKey="13d3c6c1-51fc-4bdf-8b7d-baee0da764ce" propertyLabel="Access_Token"/>
+                  </parametervalue>
+                </sourcevalues>
+              </documentproperty>
+              <documentproperty defaultValue="" isDynamicCredential="false" isTradingPartner="false" name="Dynamic Document Property - DDP_Template-ID" persist="false" propertyId="dynamicdocument.DDP_Template-ID" shouldEncrypt="false">
+                <sourcevalues>
+                  <parametervalue key="2" valueType="static">
+                    <staticparameter staticproperty="2"/>
+                  </parametervalue>
+                </sourcevalues>
+              </documentproperty>
+            </documentproperties>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape6.dragpoint1" toShape="shape8" x="448.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape8" shapetype="message" userlabel="Sample Payload" x="464.0" y="144.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>SEND_CONFIGURATION_ID={1}&amp;EMAIL={2}&amp;SUBJECT={3}&amp;TAGS[Order_ID]={4}</msgTxt>
+              <msgParameters>
+                <parametervalue key="0" valueType="static">
+                  <staticparameter staticproperty="4"/>
+                </parametervalue>
+                <parametervalue key="1" valueType="static">
+                  <staticparameter staticproperty="pavan@easystepin.com"/>
+                </parametervalue>
+                <parametervalue key="2" valueType="static">
+                  <staticparameter staticproperty="Order Placed Successfully"/>
+                </parametervalue>
+                <parametervalue key="3" valueType="static">
+                  <staticparameter staticproperty="Pavan Test"/>
+                </parametervalue>
+              </msgParameters>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape8.dragpoint1" toShape="shape4" x="704.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape9" shapetype="message" userlabel="Sample Payload" x="464.0" y="304.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>SEND_CONFIGURATION_ID=4&amp;TAGS%5BOrder_ID%5D=12423425&amp;EMAIL=pavan%40easystepin.com&amp;SUBJECT=Order%20Placed%20Successfull</msgTxt>
+              <msgParameters>
+                <parametervalue key="0" valueType="static">
+                  <staticparameter staticproperty="4"/>
+                </parametervalue>
+                <parametervalue key="1" valueType="static">
+                  <staticparameter staticproperty="pavan@easystepin.com"/>
+                </parametervalue>
+                <parametervalue key="2" valueType="static">
+                  <staticparameter staticproperty="Order Placed Successfully"/>
+                </parametervalue>
+                <parametervalue key="3" valueType="static">
+                  <staticparameter staticproperty="Pavan Test"/>
+                </parametervalue>
+              </msgParameters>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape9.dragpoint1" toShape="shape4" x="704.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape11" shapetype="message" userlabel="Sample JSON Payload" x="480.0" y="448.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>{1}</msgTxt>
+              <msgParameters>
+                <parametervalue key="0" valueType="static">
+                  <staticparameter staticproperty="{   &quot;SEND_CONFIGURATION_ID&quot;:&quot;4&quot;,   &quot;EMAIL&quot;:&quot;pavan@easystepin.com&quot;,   &quot;SUBJECT&quot;:&quot;Order Placed Successfully&quot;,   &quot;TAGS&quot;:[       {         &quot;[Key_Customer_Key]&quot;:&quot;Pavan&quot;       },       {         &quot;[Key_Order-ID_Key]&quot;:&quot;0-000192&quot;       }   ] }"/>
+                </parametervalue>
+              </msgParameters>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape11.dragpoint1" toShape="shape12" x="752.0" y="456.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="connectoraction_icon" name="shape12" shapetype="connectoraction" userlabel="" x="768.0" y="448.0">
+          <configuration>
+            <connectoraction actionType="Get" allowDynamicCredentials="NONE" connectionId="d810c8e0-d36a-4da1-b5ee-4aeeb38ffb25" connectorType="http" hideSettings="false" operationId="9db30a34-84d2-4960-94df-4b898df074f7" parameter-profile="EMBEDDED|HttpParameterChooser|9db30a34-84d2-4960-94df-4b898df074f7">
+              <parameters/>
+              <dynamicProperties/>
+            </connectoraction>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape12.dragpoint1" toShape="shape3" x="1088.0" y="152.0"/>
+          </dragpoints>
+        </shape>
+      </shapes>
+    </process>
+  </bns:object>
+  <bns:processOverrides/>
+</Component>
